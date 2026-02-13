@@ -19,8 +19,14 @@ app.set('trust proxy', 1);
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from React frontend build
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+// Serve static files from React frontend build (only if dist exists)
+const distPath = path.join(__dirname, '../frontend/dist');
+try {
+  app.use(express.static(distPath));
+  console.log('Serving static files from:', distPath);
+} catch (err) {
+  console.warn('Frontend dist not found, API-only mode');
+}
 
 // Sample product data for digital catalogue
 const products = [
