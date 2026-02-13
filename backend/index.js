@@ -1,6 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -13,6 +18,9 @@ app.set('trust proxy', 1);
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from React frontend build
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // Sample product data for digital catalogue
 const products = [
@@ -189,6 +197,11 @@ app.post('/api/contact', (req, res) => {
   const { name, email, phone, message } = req.body;
   console.log('Contact form submission:', { name, email, phone, message });
   res.json({ success: true, message: 'Thank you for contacting us! We will get back to you soon.' });
+});
+
+// Serve React app for all other routes (must be after API routes)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
 // Start server
