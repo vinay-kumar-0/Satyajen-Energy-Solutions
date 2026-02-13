@@ -201,10 +201,18 @@ app.post('/api/contact', (req, res) => {
 
 // Serve React app for all other routes (must be after API routes)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  const indexPath = path.join(__dirname, '../frontend/dist/index.html');
+  console.log('Serving index.html from:', indexPath);
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      console.error('Error serving index.html:', err);
+      res.status(404).json({ error: 'Frontend not found', path: indexPath });
+    }
+  });
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
+  console.log('Frontend dist path:', path.join(__dirname, '../frontend/dist'));
 });
