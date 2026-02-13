@@ -2,7 +2,11 @@
 
 A modern, responsive digital catalogue website for sustainable energy solutions built with React and Node.js.
 
-## 🌟 Features
+## � Live Demo
+
+**🚀 Visit the live website:** [https://satyajen-energy-solutions.onrender.com/](https://satyajen-energy-solutions.onrender.com/)
+
+## �🌟 Features
 
 - ✅ **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
 - ✅ **Product Catalogue**: Browse comprehensive product listings with categories
